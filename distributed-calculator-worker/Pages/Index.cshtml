@@ -1,0 +1,21 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+<div class="inputs">
+    <div>Registration Endpoint: <input id="registrationEndpoint" type="text" value="http://localhost:1234/register"></input></div>
+    <div>ID: <input id="id" type="text" value="a94ad939-2207-45a4-a432-849b05b939bf"></input></div>
+    <div>Team Name: <input id="teamName" type="text" value="Jon's Team"></input></div>
+    <div>Create Job Endpoint: <input id="createJobEndpoint" type="text" value="http://localhost:5198/create-job"></input></div>
+    <div>Error Check Endpoint: <input id="errorCheckEndpoint" type="text" value="http://localhost:5198/error-check"></input></div>
+    <button onclick="register()">Register</button>
+</div>
+
+<script src="~/js/index.js" asp-append-version="true"></script>
