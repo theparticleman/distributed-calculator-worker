@@ -57,6 +57,5 @@ public class RegistrationTests
         var result = await classUnderTest.RegisterAsync(new RegistrationRequest());
 
         Assert.That(result, Is.EqualTo(RegistrationResult.Failure));
-        var exception = Assert.ThrowsAsync<Exception>(() => classUnderTest.RegisterAsync(null));
     }
 }
