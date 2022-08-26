@@ -1,19 +1,31 @@
 namespace distributed_calculator_worker;
 
-
-public class CreateJobWorkflow
+public interface ICreateJobWorkflow
 {
-    private IJobRepository jobRepository;
+    CreateJobResponse CreatJob(CreateJobRequest request);
+}
 
-    public CreateJobWorkflow(IJobRepository jobRepository)
+public class CreateJobWorkflow : ICreateJobWorkflow
+{
+    private readonly IJobRepository jobRepository;
+    private readonly IJobProcessor jobProcessor;
+
+    public CreateJobWorkflow(IJobRepository jobRepository, IJobProcessor jobProcessor)
     {
         this.jobRepository = jobRepository;
+        this.jobProcessor = jobProcessor;
     }
 
     public CreateJobResponse CreatJob(CreateJobRequest request)
     {
-        jobRepository.SaveJob(request.JobId, request.Calculation);
-        return new CreateJobResponse();
+        var calculation = request.Calculation.Replace("CALCULATE: ", "");
+        var result = jobProcessor.Calculate(calculation);
+        jobRepository.SaveJob(request.JobId, request.Calculation, result);
+        return new CreateJobResponse
+        {
+            JobId = request.JobId,
+            Result = result
+        };
     }
 }
 

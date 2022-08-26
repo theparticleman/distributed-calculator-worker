@@ -8,6 +8,10 @@ builder.Services.AddControllers();
 
 Emmersion.Http.DependencyInjectionConfig.ConfigureServices(builder.Services);
 builder.Services.AddTransient<IRegistrationWorkflow, RegistrationWorkflow>();
+builder.Services.AddTransient<ICreateJobWorkflow, CreateJobWorkflow>();
+var jobRepository = new InMemoryJobRepository();
+builder.Services.AddTransient<IJobRepository>(_ => jobRepository);
+builder.Services.AddSingleton<IJobProcessor, JobProcessor>();
 
 var app = builder.Build();
 

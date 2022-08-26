@@ -4,16 +4,16 @@ namespace distributed_calculator_worker;
 
 public class CreateJobController : ControllerBase
 {
-    [HttpPost("create-job")]
-    public IActionResult CreateJob([FromBody] CreateJobRequest request)
+    private readonly ICreateJobWorkflow createJobWorkflow;
+
+    public CreateJobController(ICreateJobWorkflow createJobWorkflow)
     {
-        Console.WriteLine("CREATE JOB");
-        Console.WriteLine(request);
-        var response = new CreateJobResponse
-        {
-            JobId = request.JobId,
-            Result = "???"
-        };
-        return Ok(response);
+        this.createJobWorkflow = createJobWorkflow;
+    }
+
+    [HttpPost("create-job")]
+    public CreateJobResponse CreateJob([FromBody] CreateJobRequest request)
+    {
+        return createJobWorkflow.CreatJob(request);
     }
 }
